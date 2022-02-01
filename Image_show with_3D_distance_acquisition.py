@@ -5,9 +5,9 @@ import json
 import time 
 
 ## Configure depth and color streams
-pipeline = rs.pipeline()  #define realsenes pipeline
-config = rs.config()   #define realsense config
+pipeline = rs.pipeline()  #Create a realsenes pipeline
 
+config = rs.config()   # Create a config
 
 ## Get device product line for setting a supporting resolution
 pipeline_wrapper = rs.pipeline_wrapper(pipeline)
@@ -39,7 +39,8 @@ sensor.set_option(rs.option.pre_processing_sharpening, 5)
 sensor.set_option(rs.option.noise_filtering, 6)
 
 
-## config and start streamimg
+## Configure the pipeline to stream different resolutions of color and depth streams
+
 #config.enable_stream(rs.stream.depth, 1024, 768, rs.format.z16, 30)
 #config.enable_stream(rs.stream.color, 1024, 768, rs.format.bgr8, 30)
 config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)  #config depth stream
@@ -52,21 +53,35 @@ else:
 
 ## Start streaming
 profile = pipeline.start(config)  # start the pipeline
+
+
+# Create an align object
+# rs.align allows us to perform alignment of depth frames to others frames
+# The "align_to" is the stream type to which we plan to align depth frames.
 align_to = rs.stream.color  #与align to color stream
 align = rs.align(align_to)
 
-decimation_filter = rs.decimation_filter()  #define the filters
+
+## Define the filters
+decimation_filter = rs.decimation_filter()  
 spatial_filter = rs.spatial_filter()
 temporal_filter = rs.temporal_filter()
 
 
+## Getting the depth sensor's depth scale (see rs-align example for explanation)
+depth_sensor = profile.get_device().first_depth_sensor()
+depth_scale = depth_sensor.get_depth_scale()
+print("Depth Scale is: " , depth_scale)
+
+
+
 def get_aligned_images():
     
-    ## get frames of color and depth
+    ## Get frameset of color and depth
     frames = pipeline.wait_for_frames()  
-    aligned_frames = align.process(frames)  
+    aligned_frames = align.process(frames)    # Align the depth frame to color frame
     color_frame = aligned_frames.get_color_frame()   # get color frame
-    aligned_depth_frame = aligned_frames.get_depth_frame()  #get the depth frame
+    aligned_depth_frame = aligned_frames.get_depth_frame()  #get aligned frame, ! aligned_depth_frame is a 640x480 depth image
     
     
     ## filter the aligned depth frames
@@ -84,7 +99,7 @@ def get_aligned_images():
     camera_parameters = {'fx': intr.fx, 'fy': intr.fy,
                          'ppx': intr.ppx, 'ppy': intr.ppy,
                          'height': intr.height, 'width': intr.width,
-                         'depth_scale': profile.get_device().first_depth_sensor().get_depth_scale()
+                         'depth_scale': depth_scale
                          }
     # save intrinsic parameter
     with open('./intrinsics.json', 'w') as fp:
@@ -111,18 +126,27 @@ def get_aligned_images():
         images_depth_colormap = np.hstack((color_image, depth_colormap))
     
     
-    
+    ## Align channel of depth image with color image
+    # Depth image is 1 channel, color is 3 channels !
     depth_image_3d = np.dstack((depth_image, depth_image, depth_image))  # 3-channel depth image
     depth_image_3d_8bit = np.dstack((depth_image_8bit,depth_image_8bit,depth_image_8bit))  # 3channel 8bit depth image
     
+    ## Remove background - Set pixels further than clipping_distance to grey
+    # We will be removing the background of objects more than 'clipping_distance_in_meters' meters away
+    clipping_distance_in_meters = 1 #1 meter
+    clipping_distance = clipping_distance_in_meters / depth_scale
+    grey_color = 153
+    color_image_bk_removed = np.where((depth_image_3d > clipping_distance) | (depth_image_3d <= 0), grey_color, color_image)
+    
+    
     #return intrinsic_paramter, depth_parameter, color_image, depth_image, color-mapped depth image, 3-channel_depth_image, aligned_depth_frame
-    return intr, depth_intrin, color_image, depth_image, images_depth_colormap, depth_image_3d, aligned_depth_frame
+    return intr, depth_intrin, color_image, depth_image, images_depth_colormap, depth_image_3d, aligned_depth_frame, color_image_bk_removed
     
 if __name__ == "__main__":
     while True:
     
         ## get the aligned image and camera intrinsic param
-        intr, depth_intrin, color_image, depth_image, images_depth_colormap, depth_image_3d, aligned_depth_frame = get_aligned_images()
+        intr, depth_intrin, color_image, depth_image, images_depth_colormap, depth_image_3d, aligned_depth_frame, color_image_bk_removed = get_aligned_images()
         
         ## chose the x, y coordinates (now the center point of camera)
         x = 320  
@@ -139,14 +163,20 @@ if __name__ == "__main__":
         print(camera_coordinate)
         
         
-        ## show image
+        ###  Show image
         #cv2.namedWindow('RGB color image', cv2.WINDOW_AUTOSIZE)
-        #cv2.imshow('RGB color image', color_image)  #Display the RBG image with the openCV2 image show
+        #cv2.imshow('RGB color image', color_image)  # display the RBG image
+        
         #cv2.namedWindow('Depth image', cv2.WINDOW_AUTOSIZE)
-        #cv2.imshow('Depth image', depth_image)
+        #cv2.imshow('Depth image', depth_image)    # display the depth image (white-black style)
+        
         cv2.namedWindow('Color-mapped depth image', cv2.WINDOW_AUTOSIZE)  #Display the RBG image and the color-mapped depth image (opencv_viewer_example.py)
         cv2.imshow('Color-mapped depth image', images_depth_colormap)    #containing both the color image and depth image above
-
+        
+        cv2.namedWindow('Background-removed color image', cv2.WINDOW_NORMAL)
+        cv2.imshow('Background-removed color image', color_image_bk_removed)    # display the background-removed color image (align-depth2color.py)
+        
+        
         
         key = cv2.waitKey(1)
         # Press esc or 'q' to close the image window
