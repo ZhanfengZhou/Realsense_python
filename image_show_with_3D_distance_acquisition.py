@@ -163,6 +163,7 @@ if __name__ == "__main__":
         print(camera_coordinate)
         
         
+        
         ###  Show image
         #cv2.namedWindow('RGB color image', cv2.WINDOW_AUTOSIZE)
         #cv2.imshow('RGB color image', color_image)  # display the RBG image
