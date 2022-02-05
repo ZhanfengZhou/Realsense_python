@@ -7,15 +7,15 @@ import cv2
 ## parameters for Charuco board
 square_x = 5                           # Number of squares in X direction
 square_y = 7                           # Number of squares in Y direction
-square_length = 0.4                    # Square side length (meters)
-marker_length = 0.2                    # Marker side length (meters)
+square_length = 40                    # Square side length (milimeters)
+marker_length = 20                    # Marker side length (milimeters)
 margins = square_length - marker_length  # Margins size 
 
 dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)    #dictionary
 
 image_size_x = square_x * square_length + 2 * margins
 image_size_y = square_y * square_length + 2 * margins
-image_size = (int(image_size_x * 1000), int(image_size_y * 1000))
+image_size = (image_size_x , image_size_y)
 print(image_size)
 
 
@@ -23,7 +23,7 @@ print(image_size)
 board = cv2.aruco.CharucoBoard_create(square_x, square_y, square_length, marker_length, dictionary)
 
 # show created board
-board_image = cv2.aruco_CharucoBoard.draw(board, image_size, marginSize = int(margins*1000), borderBits = 1)
+board_image = cv2.aruco_CharucoBoard.draw(board, image_size, marginSize = 20, borderBits = 1)
 #cv2.namedWindow('Charuco board image', cv2.WINDOW_NORMAL)
 cv2.imshow('Charuco board image', board_image)    
 
