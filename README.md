@@ -1,4 +1,3 @@
 # Realsense_python
-Realsense2 python example to process image data
+Realsense2 python test and calibration node
 
-librealsense python wrapper is from the wrapper of IntelRealsense git: https://github.com/IntelRealSense/librealsense.git
