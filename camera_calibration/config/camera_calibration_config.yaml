@@ -1,0 +1,38 @@
+publisher_inverse_kinematics_controller:
+  ros__parameters:
+
+    controller_name: "joint_trajectory_controller"
+    wait_sec_between_publish: 6
+
+    goal_names: ["pos1", "pos2", "pos3", "pos4"]
+    pos1: [-90.0, 90.0, 90.0, 0.6, -0.109, 0.3]   #ZYZ Euler angle(d) and position(m)
+    pos2: [-90.0, 90.0, 90.0, 0.4, -0.109, 0.6]
+    pos3: [-90.0, 90.0, 90.0, 0.4, -0.3, 0.6]
+    pos4: [-90.0, 90.0, 90.0, 0.4, -0.3, 0.3]
+    
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+
+    check_starting_point: true
+    starting_point_limits:
+      shoulder_pan_joint: [-0.1,0.1]
+      shoulder_lift_joint: [-1.6,-1.5]
+      elbow_joint: [-0.1,0.1]
+      wrist_1_joint: [-1.6,-1.5]
+      wrist_2_joint: [-0.1,0.1]
+      wrist_3_joint: [-0.1,0.1]
+
+timer_node_image_capture:
+  ros__parameters:
+
+    image_capture_number: 35
+    wait_sec_between_image_capture: 6
+    image_capture_time: 5
+
+      
+      

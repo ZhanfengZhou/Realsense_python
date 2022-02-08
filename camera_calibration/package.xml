@@ -3,10 +3,25 @@
 <package format="3">
   <name>camera_calibration</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>camera l515 calibration node</description>
   <maintainer email="zhanfeng.zhou@mail.utoronto.ca">zhanfeng</maintainer>
-  <license>TODO: License declaration</license>
-
+  <license>Apache License 2.0</license>
+  
+  <depend>rclpy</depend>
+  <depend>pyrealsense2</depend>
+  <depend>cv2</depend>
+  <depend>math</depend>
+  <depend>numpy</depend>
+  <depend>time</depend>
+  
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>urdf</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
