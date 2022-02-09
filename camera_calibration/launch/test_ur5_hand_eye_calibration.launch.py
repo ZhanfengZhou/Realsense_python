@@ -14,8 +14,8 @@ def generate_launch_description():
         [
             Node(
                 package="ros2_control_test_nodes",
-                executable="publisher_inverse_kinematics_controller",
-                name="publisher_inverse_kinematics_controller",
+                executable="publisher_camera_calibration_ik_controller",
+                name="publisher_camera_calibration_ik_controller",
                 parameters=[camera_calibration_ur5_goals],
                 output={
                     "stdout": "screen",
