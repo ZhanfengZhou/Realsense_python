@@ -75,12 +75,13 @@ if __name__ == "__main__":
     
         color_image, image_resized = capture_images()
         
-        image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_calibration/Intrinsic_calibration_images/"
-        image_filename = f'intrinsic_calibration_image_{image_num}.png'
+        image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_l515_test/MIE1517_hand_gesture/"
+        #image_filename = f'intrinsic_calibration_image_{image_num}.png'
+        image_filename = f'1007413069_{image_num}.jpg'
         
         ##  Show image
-        cv2.namedWindow('intrinsic calibration RGB image', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('intrinsic calibration RGB image', color_image)  # display the RBG images
+        cv2.namedWindow('camera l515 RGB image', cv2.WINDOW_AUTOSIZE)
+        cv2.imshow('camera l515 RGB image', color_image)  # display the RBG images
 
         key = cv2.waitKey(1)   # the time for image showing in millisecond
         

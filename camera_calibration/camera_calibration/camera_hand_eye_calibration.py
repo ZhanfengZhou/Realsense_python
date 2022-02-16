@@ -27,12 +27,13 @@ image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_calibrati
 camera_matrix = np.loadtxt("Calibration_output/camera_intrinsic_matrix.txt", cameraMatrix)
 dist_coeffs = np.loadtxt("Calibration_output/camera_intrinsic_distCoeffs.txt", distCoeffs)
 
-R_target2cam = np.array([])
-t_target2cam = np.array([])
+
+###(1) Pose estimation, calculating Transformation from board to camera
+R_board2camera = np.array([])
+T_board2camera = np.array([])
 
 count = []
 
-### Pose estimation
 for i in range(image_num):
     image_filename = f'hand_eye_calibration_image_{i}.png'
     image = cv2.imread(image_savepath + image_filename)
@@ -57,8 +58,8 @@ for i in range(image_num):
                 tvec = tvec * 1000    # to millimeter
                 
                 # save pose
-                R_target2cam = np.append(R_target2cam, dst)
-                t_target2cam = np.append(t_target2cam, tvec)
+                R_target2camera = np.append(R_board2camera, dst)
+                T_target2camera = np.append(T_board2camera, tvec)
                 
                 count.append(i)
                 
@@ -69,22 +70,40 @@ for i in range(image_num):
                 cv2.destroyAllWindows()
                 
     
-t_target2cam = t_target2cam.reshape((len(count),3,1))
-R_target2cam = R_target2cam.reshape((len(count),3,3))
+T_board2camera = T_board2camera.reshape((len(count),3,1))
+R_board2camera = R_board2camera.reshape((len(count),3,3))
 cv2.destroyAllWindows()
     
 
-### hand eye calibration
+###(2) Calculating Transformation from ur5 end effector to ur5 base
+
+R_end2base = np.array([])
+T_end2base = np.array([])
+
+ur5_pose_joints_angle = [[-90.0, 179.9, 0.0, 0.35, -0.10, 0.48],[0.0, 163.0, 0.0, 0.14, -0.1, 0.3],[0.0, 150.0, 0.0, 0.21, -0.1, 0.44],[30.0, 152.0, 0.0, 0.282, -0.219, 0.22],[60.0, 158.0, 0.0, 0.255, -0.27, 0.38],[-90.0, -152.0, 0.0, 0.35, -0.26, 0.28],[-60.0, -156.0, 0.0, 0.45, -0.27, 0.34],[-30.0, -145.0, 0.0, 0.53, -0.20, 0.22],[0.0, -157.0, 0.0, 0.50, -0.10, 0.35],[45.0, -154.0, 0.0, 0.48, 0.04, 0.32],[90.0, -152.0, 0.0, 0.35, 0.16, 0.4],[-45.0, 152.0, 0.0, 0.2, 0.05, 0.32]]
+
+ur5_pose_joints_angle = ur5_pose_joints_angle[count] #align number of pose to number of images
+
+for i in range(ur5_pose_joints_angle.shape[0]):
+    euler_angle = points[i]
+    r_end2base, t_end2base = euler_2_Trans(euler_angle)
+    R_end2base.append(r_end2base)
+    T_end2base.append(t_end2base)
+
+R_end2base = R_end2base.reshape((ur5_pose_joints_angle.shape[0],3,3))
+T_end2base = T_end2base.reshape((ur5_pose_joints_angle.shape[0],3,1))
 
 
-Trans_R_end2base = np.array([])
-Trans_T_end2base = np.array([])
+###(3) Hand eye calibration: calculating Transformation from camera to ur5 end effector
 
-euler_2_Trans(euler_angle)
-
-
-
-
+R_camera2end, R_camera2end = cv.calibrateHandEye(R_end2base, T_end2base, R_board2camera, T_board2camera, method=cv.CALIB_HAND_EYE_HORAUD)  # method??
+print('R_camera2end: \n', R_camera2end)
+print('T_camera2end: \n', T_camera2end)
+    
+Trans_camera2end = np.c_[R_camera2end, T_camera2end]
+Trans_camera2end = np.r_[Trans_camera2end, np.array([[0,0,0,1]])]
+np.savetxt('Calibration_output/hand_eye_calibration_matrix.txt', Trans_camera2end)
+print(Trans_camera2end)
 
 
 
