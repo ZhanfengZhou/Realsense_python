@@ -25,7 +25,7 @@ dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)    #dicti
 ## create board
 board = cv2.aruco.CharucoBoard_create(square_x, square_y, square_length, marker_length, dictionary)
 
-image_filename = f'/home/zhanfeng/camera_ws/src/Realsense_python/camera_calibration/camera_calibration/calibration_test1.jpg'
+image_filename = f'/home/zhanfeng/camera_ws/src/Realsense_python/camera_calibration/camera_calibration/calibration_test.png'
 image = cv2.imread(image_filename)
 image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)    #gray image for markers detection
 image_color = cv2.cvtColor(image_gray, cv2.COLOR_GRAY2BGR)    #color image for display
@@ -55,7 +55,7 @@ if len(ids) > 0:
     
         # display the color image with outer Chessboard  corners with ids
         cv2.aruco.drawDetectedCornersCharuco(image_color, charucoCorners, charucoIds, [0, 0, 255])
-        cv2.imwrite('calibration_test1_detected.jpg', image_color)
+        cv2.imwrite('calibration_test_detected.png', image_color)
         cv2.namedWindow('image with chessboard corner and IDs detected', cv2.WINDOW_AUTOSIZE)
         cv2.imshow("image with chessboard corner and IDs detected", image_color)
         cv2.waitKey(0)

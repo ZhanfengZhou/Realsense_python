@@ -12,7 +12,7 @@ publisher_camera_calibration_ik_controller:
     #ZYZ Euler angle(d) and position(m)
     pos1: [-90.0, 179.9, 0.0, 0.45, -0.10, 0.45]    # (0) 0 degree
     pos2: [0.0, 163.0, 90.0, 0.34, -0.1, 0.3]    # (12) 28 degree; x - 0.21; y
-    pos3: [0.0, 150.0, 90.0, 0.30, -0.1, 0.44]    # (12) 15 degree; x - 0.14; y
+    pos3: [0.0, 150.0, 90.0, 0.25, -0.1, 0.44]    # (12) 15 degree; x - 0.14; y
     #pos3: [18.0, 174.0, 0.0, 0.225, -0.14, 0.36]    # (11.5) 16 degree; x - 0.125; y - 0.04
     pos4: [30.0, 152.0, 130.0, 0.32, -0.219, 0.22]    # (11) 20 degree; x - 0.068; y - 0.119
     #pos4: [30.0, 152.0, 0.0, 0.15, -0.21, 0.34]    # (11) 28 degree; x - 0.2; y - 0.11, (z-0.2)
@@ -64,7 +64,7 @@ timer_node_image_capture:
 
     image_capture_number: 12
     wait_sec_between_image_capture: 10
-    image_capture_time: 9
+    image_capture_time: 8
 
       
       

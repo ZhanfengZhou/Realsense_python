@@ -1,6 +1,6 @@
 
 import numpy as np
-
+import math
 
 def euler_angle_2_trans(goals_value):
 
@@ -30,7 +30,9 @@ def euler_angle_2_trans(goals_value):
     az = ct
         
     Trans_R = [[nx, ox, ax],[ny, oy, ay],[nz, oz, az]]
-    Trans_T = [x, y, z]
+    zcamera_6 = -0.175    #camera: z: 175mm
+    
+    Trans_T = [1000*(x+ax*zcamera_6), 1000*(y+ay*zcamera_6), 1000*(z+az*zcamera_6)]
     
     return Trans_R, Trans_T
     
