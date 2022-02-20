@@ -21,6 +21,7 @@ def generate_launch_description():
                     "stdout": "screen",
                     "stderr": "screen",
                 },
+             )
              Node(
                 package="camera_calibration",
                 executable="timer_node_image_capture",

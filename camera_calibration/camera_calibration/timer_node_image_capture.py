@@ -16,9 +16,9 @@ class TimerNodeImageCapture(Node):
         super().__init__("timer_node_image_capture")
         
         # Declare all parameters
-        self.declare_parameter("wait_sec_between_image_capture", 6)
-        self.declare_parameter("image_capture_time", 5)     #capture a image at the 5th second of every 6 seconds
-        self.declare_parameter("image_capture_number", 35)
+        self.declare_parameter("wait_sec_between_image_capture", 8)
+        self.declare_parameter("image_capture_time", 6)     #capture a image at the 6th second of every 8 seconds
+        self.declare_parameter("image_capture_number", 12)
 
         # Read parameters
         wait_sec_between_image_capture = self.get_parameter("wait_sec_between_image_capture").value
@@ -93,7 +93,7 @@ class TimerNodeImageCapture(Node):
     def timer_callback(self):
 
         ## capturing image
-        time.sleep(5)
+        time.sleep(self.image_capture_time)
         
         if self.i < self.image_capture_number:
             self.capture_images()
@@ -117,17 +117,21 @@ class TimerNodeImageCapture(Node):
         ## Get the depth and color image and Convert images to numpy arrays
         color_image = np.asanyarray(color_frame.get_data())  # color image
         
-        image_resized = cv2.resize(color_image,(int(1280/2),int(720/2)))
+        #image_resized = cv2.resize(color_image,(int(1280/2),int(720/2)))
+        image_cropped = color_image[160:960, 160:800]
         
         image_filename = 'hand_eye_calibration_image_{}.png'.format(self.i)
+        
         cv2.imwrite(self.image_savepath + image_filename, color_image)
         
+        image_cropped_filename = 'hand_eye_calibration_cropped_image_{}.png'.format(self.i)
         self.get_logger().info('Capturing hand_eye_calibration_image_{}.png'.format(self.i))
+        cv2.imwrite(self.image_savepath + image_cropped_filename, image_cropped)
         
         ##  Show image
-        cv2.imshow('Capturing hand_eye_calibration_image_{}'.format(self.i), color_image)
-        k = cv2.waitKey(2000)
-        
+        cv2.imshow('Capturing hand_eye_calibration_image_{}'.format(self.i), image_cropped)
+        key = cv2.waitKey(2000) 
+                
         cv2.destroyAllWindows()
         
         return

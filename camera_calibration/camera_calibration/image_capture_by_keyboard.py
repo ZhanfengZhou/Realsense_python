@@ -44,6 +44,7 @@ sensor.set_option(rs.option.noise_filtering, 6)
 ## Configure the pipeline to stream different resolutions of color and depth streams
         
 if device_product_line == 'L500':
+    #config.enable_stream(rs.stream.color, 1080, 768, rs.format.bgr8, 30)
     config.enable_stream(rs.stream.color, 960, 540, rs.format.bgr8, 30)
 else:
     config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
@@ -63,9 +64,10 @@ def capture_images():
     ## Get the depth and color image and Convert images to numpy arrays
     color_image = np.asanyarray(color_frame.get_data())  # color image
     
-    image_resized = cv2.resize(color_image,(int(1280/2),int(720/2)))
-
-    return color_image, image_resized
+    #image_resized = cv2.resize(color_image,(int(1280/2),int(720/2)))
+    image_cropped = color_image[160:960, 160:800]
+    
+    return color_image, image_cropped
 
 
 if __name__ == "__main__":
@@ -73,14 +75,15 @@ if __name__ == "__main__":
     
     while True:
     
-        color_image, image_resized = capture_images()
+        color_image, image_cropped = capture_images()
         
         image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_calibration/Intrinsic_calibration_images/"
         image_filename = f'intrinsic_calibration_image_{image_num}.png'
         
         ##  Show image
         cv2.namedWindow('intrinsic calibration RGB image', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('intrinsic calibration RGB image', color_image)  # display the RBG images
+        #cv2.imshow('intrinsic calibration RGB image', color_image)  # display the RBG images
+        cv2.imshow('intrinsic calibration RGB image', image_cropped)  # display the cropped RBG images
 
         key = cv2.waitKey(1)   # the time for image showing in millisecond
         
@@ -92,7 +95,7 @@ if __name__ == "__main__":
         # Press space or 's' to save and write the image
         elif key & 0xFF == ord('s') or key == 32:  
             print(f'Capturing hand_eye_calibration_image_{image_num}.png')
-            cv2.imwrite(image_savepath + image_filename, color_image)
+            cv2.imwrite(image_savepath + image_filename, image_cropped)
             image_num += 1
         
     cv2.destroyAllWindows()
