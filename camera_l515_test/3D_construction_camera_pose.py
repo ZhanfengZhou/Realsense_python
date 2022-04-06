@@ -47,7 +47,7 @@ Trans_camera2end = np.loadtxt("3D_reconstruction_images/hand_eye_calibration_mat
 
 Trans_camera2base = []
 for i in range(ur5_pose_euler_angle.shape[0]):
-    Trans_camera2base_i = np.matmul(Trans_camera2end, Trans_end2base[i])
+    Trans_camera2base_i = np.matmul(Trans_end2base[i], Trans_camera2end)
     Trans_camera2base.append(Trans_camera2base_i)
     np.savetxt(f'3D_reconstruction_images/Matrix_camera2base/camera2base_matrix_for image_{i}.txt', Trans_camera2base[i])
 
