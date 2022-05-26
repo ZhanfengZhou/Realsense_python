@@ -21,7 +21,7 @@ dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)    #dicti
 ## create board
 board = cv2.aruco.CharucoBoard_create(square_x, square_y, square_length, marker_length, dictionary)
 
-image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_calibration/Hand_eye_calibration_images_saved/Hand_eye_calibration_images12/"
+image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_calibration/Hand_eye_calibration_images_saved/Hand_eye_calibration_images13/"
 
 
 # read the camera matrix and dist_coeffs

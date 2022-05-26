@@ -33,6 +33,7 @@ for i in range(ur5_pose_euler_angle.shape[0]):
 
 R_end2base = R_end2base.reshape((ur5_pose_euler_angle.shape[0],3,3))
 T_end2base = T_end2base.reshape((ur5_pose_euler_angle.shape[0],3,1))
+# change to mm
 
 
 Trans_end2base = []
@@ -49,7 +50,10 @@ Trans_camera2base = []
 for i in range(ur5_pose_euler_angle.shape[0]):
     Trans_camera2base_i = np.matmul(Trans_end2base[i], Trans_camera2end)
     Trans_camera2base.append(Trans_camera2base_i)
-    np.savetxt(f'3D_reconstruction_images/Matrix_camera2base/camera2base_matrix_for image_{i}.txt', Trans_camera2base[i])
+    Trans_camera2base[i][0][3] /= 1000
+    Trans_camera2base[i][1][3] /= 1000
+    Trans_camera2base[i][2][3] /= 1000
+    np.savetxt(f'3D_reconstruction_images/Matrix_camera2base/camera2base_matrix_for_image_{i}.txt', Trans_camera2base[i])
 
 
 
