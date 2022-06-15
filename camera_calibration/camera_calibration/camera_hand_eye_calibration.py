@@ -21,7 +21,7 @@ dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)    #dicti
 ## create board
 board = cv2.aruco.CharucoBoard_create(square_x, square_y, square_length, marker_length, dictionary)
 
-image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_calibration/Hand_eye_calibration_images_saved/Hand_eye_calibration_images13/"
+image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_calibration/Hand_eye_calibration_images_saved/Hand_eye_calibration_images15/"
 
 
 # read the camera matrix and dist_coeffs
@@ -72,15 +72,15 @@ for i in range(image_num):
                 
                 image_color = cv2.aruco.drawAxis(image_color, camera_matrix, dist_coeffs, rvec, tvec, 100)
                 
-                image_cropped = image_color[160:960, 160:800]
+                #image_cropped = image_color[160:960, 160:800]
                 
-                #cv2.imshow(f'hand_eye_calibration_image_{i} pose estimation', image_color)
                 print(f"Processing hand eye calibration image - {i}")
-                cv2.imshow(f'hand_eye_calibration_image_{i} pose estimation', image_cropped)
+                cv2.imshow(f'hand_eye_calibration_image_{i} pose estimation', image_color)
+                #cv2.imshow(f'hand_eye_calibration_image_{i} pose estimation', image_cropped)
                 
                 cv2.waitKey(1000)    #1s
                 cv2.imwrite(f'Calibration_output/hand_eye_calibration_pose_estimation/hand_eye_pose_estimation_{i}.png', image_color)
-                cv2.imwrite(f'Calibration_output/hand_eye_calibration_pose_estimation/hand_eye_pose_estimation_cropped_{i}.png', image_cropped)
+                #cv2.imwrite(f'Calibration_output/hand_eye_calibration_pose_estimation/hand_eye_pose_estimation_cropped_{i}.png', image_cropped)
                 cv2.destroyAllWindows()
                 
     
@@ -111,7 +111,8 @@ T_end2base = T_end2base.reshape((ur5_pose_joints_angle.shape[0],3,1))
 
 ###(3) Hand eye calibration: calculating Transformation from camera to ur5 end effector
 
-R_camera2end, T_camera2end = cv2.calibrateHandEye(R_end2base, T_end2base, R_board2camera, T_board2camera, method=cv2.CALIB_HAND_EYE_HORAUD)  # method??
+R_camera2end, T_camera2end = cv2.calibrateHandEye(R_end2base, T_end2base, R_board2camera, T_board2camera, method=cv2.CALIB_HAND_EYE_HORAUD)  
+
 print('R_camera2end: \n', R_camera2end)
 print('T_camera2end: \n', T_camera2end)
     
