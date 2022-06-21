@@ -21,7 +21,7 @@ count = []
 ###(1) Calculating Transformation from ur5 end effector to ur5 base
 
 image_num = 5
-ur5_pose_euler_angle = np.array([[-90.0, 179.9, 0.0, 0.45, -0.10, 0.5],[0.0, 135.0, 90.0, 0.1, -0.10, 0.35],[-90.0, -135.0, 0.0, 0.45, -0.45, 0.35],[0.0, -135.0, 60.0, 0.8, -0.10, 0.35],[90.0, -135.0, 0.0, 0.45, 0.25, 0.35]])
+ur5_pose_euler_angle = np.array([[-90.0, 179.9, 0.0, 0.45, -0.10, 0.5],[0.0, 150.0, 90.0, 0.22, -0.10, 0.32],[-90.0, -150.0, 0.0, 0.42, -0.35, 0.32],[0.0, -150.0, 60.0, 0.60, -0.10, 0.28],[90.0, -150.0, 90.0, 0.4, 0.15, 0.32]])
 
 R_end2base = np.array([])
 T_end2base = np.array([])
@@ -33,6 +33,7 @@ for i in range(ur5_pose_euler_angle.shape[0]):
 
 R_end2base = R_end2base.reshape((ur5_pose_euler_angle.shape[0],3,3))
 T_end2base = T_end2base.reshape((ur5_pose_euler_angle.shape[0],3,1))
+# change to mm
 
 
 Trans_end2base = []
@@ -49,7 +50,10 @@ Trans_camera2base = []
 for i in range(ur5_pose_euler_angle.shape[0]):
     Trans_camera2base_i = np.matmul(Trans_end2base[i], Trans_camera2end)
     Trans_camera2base.append(Trans_camera2base_i)
-    np.savetxt(f'3D_reconstruction_images/Matrix_camera2base/camera2base_matrix_for image_{i}.txt', Trans_camera2base[i])
+    Trans_camera2base[i][0][3] /= 1000
+    Trans_camera2base[i][1][3] /= 1000
+    Trans_camera2base[i][2][3] /= 1000
+    np.savetxt(f'3D_reconstruction_images/Matrix_camera2base/camera2base_matrix_for_image_{i}.txt', Trans_camera2base[i])
 
 
 
