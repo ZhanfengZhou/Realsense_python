@@ -75,9 +75,10 @@ if __name__ == "__main__":
     
         color_image, image_resized = capture_images()
         
-        image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_l515_test/MIE1517_hand_gesture/"
+        image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_l515_test/"
         #image_filename = f'intrinsic_calibration_image_{image_num}.png'
-        image_filename = f'1007413069_{image_num}.jpg'
+        #image_filename = f'1007413069_{image_num}.jpg'
+        image_filename = f'vision_guided_grasping_{image_num}.jpg'
         
         ##  Show image
         cv2.namedWindow('camera l515 RGB image', cv2.WINDOW_AUTOSIZE)

@@ -8,12 +8,12 @@ publisher_vision_based_grasp_controller:
     goal_names: ["object0", "object1", "object2", "object3", "object4", "object5"]
 
     #ZYZ Euler angle(d) and position(m)
-    object0: [-90.0, 179.9, 0.0, 0.0, 0.0, 0.0]    
-    object1: [-90.0, 179.9, 0.0, 0.0, 0.0, 0.0]    
-    object2: [-90.0, 179.9, 0.0, 0.0, 0.0, 0.0]    
-    object3: [-90.0, 179.9, 0.0, 0.0, 0.0, 0.0]    
-    object4: [-90.0, 179.9, 0.0, 0.0, 0.0, 0.0]   
-    object5: [-90.0, 179.9, 0.0, 0.0, 0.0, 0.0]    
+    object0: [-52.6,  179.9,  0.0,  0.26,  0.0756, -0.032]    #object_idx = 0
+    object1: [-41.23, 102.54,  -6.63,  0.408,  0.062, -0.0114]    #object_idx = 3
+    object2: [-100.0,  90.0,  0.0,  0.33, -0.076,  0.0497]     #object_idx = 2
+    object3: [-88.0,  175.0,  0.0,  0.475, -0.086, -0.039]    #object_idx = 5
+    object4: [-118.0,  179.9,  0.0,  0.43,  -0.29, -0.038]   #object_idx = 4
+    object5: [-114.0,  90.0,  0.0,  0.3, -0.28, -0.0126]    #object_idx = 1
     
     joints:
       - shoulder_pan_joint

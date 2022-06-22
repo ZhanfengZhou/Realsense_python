@@ -1,0 +1,24 @@
+Euler angle for object_0:    [-130.56492865  177.49846164  -77.93863245]
+Center point for object_0:    [ 0.26085314  0.07555351 -0.0318002 ]
+
+
+Euler angle for object_1:    [-116.87416582   89.02526103   -2.816493  ]
+Center point for object_1:    [ 0.30019431 -0.27864765 -0.01256385]
+
+
+Euler angle for object_2:    [-95.35714944  91.13366911  -1.93360373]
+Center point for object_2:    [ 0.32917747 -0.07589659  0.04965911]
+
+
+Euler angle for object_3:    [-41.23122267 102.54066911  -6.63071369]
+Center point for object_3:    [ 0.40843133  0.06222733 -0.01142186]
+
+
+Euler angle for object_4:    [ 104.76669009  178.48058502 -137.1326522 ]
+Center point for object_4:    [ 0.4337621  -0.29214949 -0.03788245]
+
+
+Euler angle for object_5:    [-75.6688134  173.28447433  12.1206338 ]
+Center point for object_5:    [ 0.47450737 -0.08637632 -0.03880769]
+
+
