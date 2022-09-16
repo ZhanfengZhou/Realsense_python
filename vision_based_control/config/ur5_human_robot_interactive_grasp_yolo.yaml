@@ -1,0 +1,22 @@
+human_robot_interactive_grasp_yolo:
+  ros__parameters:
+
+    controller_name: "joint_trajectory_controller"
+    wait_sec_between_publish: 16
+    trajectory_duration: 8
+
+    #ZYZ Euler angle(d) and position(m)
+    start_goal: [-179.9, -90.0, 0.0, 0.3, -0.10, 0.6]    
+    grasp_goal: [-179.9, -90.0, 0.0, 0.3, -0.10, 0.6]     
+    
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+
+
+      
+      
