@@ -1,0 +1,42 @@
+interactive_grasp_from_human_and_table_yolo:
+  ros__parameters:
+
+    controller_name: "joint_trajectory_controller"
+
+    ## parameters for grasp from hand
+    to_sleep_traj_duration: 8
+    to_start_traj_duration: 8
+    to_grasp_traj_duration: 5
+    to_grasp_traj_duration2: 1
+    to_final_traj_duration: 6
+     
+    #ZYZ Euler angle(d) and position(m)
+    sleep_goal: [90.0, 179.9, 0.0, -0.1, -0.25, 0.2]  
+    start_goal: [179.9, -90.0, 0.0, 0.35, -0.10, 0.6]    
+    grasp_goal: [179.9, -90.0, 0.0, 0.35, -0.10, 0.6]   
+    grasp_goal_top: [179.9, -150.0, -90.0, 0.35, -0.10, 0.6]  
+    grasp_goal_down: [179.9, -30.0, 90.0, 0.35, -0.10, 0.6]  
+    final_goal: [125.0, 179.9, 0.0, 0.2, -0.5, 0.2]  
+
+
+    ## parameters for grasp from table
+    table_start_traj_duration: 8
+    table_scan_traj_duration: 1
+    table_grasp_traj_duration: 8
+
+    start_goal_table: [-90.0, 179.9, 0.0, 0.45, -0.10, 0.5]  
+    grasp_goal_table: [-90.0, 179.9, 0.0, 0.45, -0.10, 0.5]  
+    scan_dis_table: 0.1
+
+    
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+
+
+      
+      
