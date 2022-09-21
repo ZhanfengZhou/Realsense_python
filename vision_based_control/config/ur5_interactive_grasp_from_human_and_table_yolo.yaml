@@ -4,28 +4,37 @@ interactive_grasp_from_human_and_table_yolo:
     controller_name: "joint_trajectory_controller"
 
     ## parameters for grasp from hand
-    to_sleep_traj_duration: 8
-    to_start_traj_duration: 8
+    to_sleep_traj_duration: 6
+    to_start_traj_duration: 5
     to_grasp_traj_duration: 5
-    to_grasp_traj_duration2: 1
+    to_grasp_traj_duration2: 3
     to_final_traj_duration: 6
      
     #ZYZ Euler angle(d) and position(m)
-    sleep_goal: [90.0, 179.9, 0.0, -0.1, -0.25, 0.2]  
-    start_goal: [179.9, -90.0, 0.0, 0.35, -0.10, 0.6]    
-    grasp_goal: [179.9, -90.0, 0.0, 0.35, -0.10, 0.6]   
-    grasp_goal_top: [179.9, -150.0, -90.0, 0.35, -0.10, 0.6]  
-    grasp_goal_down: [179.9, -30.0, 90.0, 0.35, -0.10, 0.6]  
-    final_goal: [125.0, 179.9, 0.0, 0.2, -0.5, 0.2]  
+    sleep_goal: [179.9, -135.0, 0.0, 0.4, -0.10, 0.35] 
+    start_goal: [179.9, -90.0, 0.0, 0.35, -0.10, 0.45]    
+    grasp_goal: [179.9, -90.0, 0.0, 0.54, -0.10, 0.45]   
+    grasp_goal_top: [179.9, -160.0, -90.0, 0.6, -0.10, 0.45]  
+    grasp_goal_down: [179.9, -30.0, 90.0, 0.55, -0.10, 0.50] 
+    final_goal: [-125.0, 179.9, 0.0, 0.2, -0.5, 0.2]  
+
+    ## parameters for shaking hand
+    give_hand_goal: [179.9, -135.0, 0.0, 0.38, -0.10, 0.32] 
+    shake_hand_goal: [179.9, -135.0, 0.0, 0.5, -0.10, 0.26] 
+    shake_hand_dis: 0.03
+    give_hand_traj_duration: 5
+    shake_hand_traj_duration: 1
 
 
     ## parameters for grasp from table
-    table_start_traj_duration: 8
+    table_start_traj_duration: 5
     table_scan_traj_duration: 1
-    table_grasp_traj_duration: 8
+    table_grasp_traj_duration: 6
 
-    start_goal_table: [-90.0, 179.9, 0.0, 0.45, -0.10, 0.5]  
-    grasp_goal_table: [-90.0, 179.9, 0.0, 0.45, -0.10, 0.5]  
+    start_goal_table: [-90.0, 179.9, 0.0, 0.45, -0.10, 0.35]  
+    grasp_goal_table1: [0.0, 165.0, 90.0, 0.42, 0.10, 0.01]
+    grasp_goal_table2: [0.0, 165.0, 90.0, 0.52, -0.05, 0.011]
+    grasp_goal_table3: [0.0, 165.0, 90.0, 0.42, -0.20, 0.011]
     scan_dis_table: 0.1
 
     
