@@ -132,7 +132,7 @@ if __name__ == "__main__":
     
         intr, depth_intrin, color_image, depth_image, images_depth_colormap, depth_image_3d, aligned_depth_frame = capture_rgbd_images()
         
-        image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_l515_test/3D_reconstruction_images/"
+        image_savepath = "/home/zhanfeng/camera_ws/src/Realsense_python/camera_l515_test/test_dataset/"
         color_image_filename = f'color_image_{image_num}.jpg'
         depth_image_filename = f'depth_image_{image_num}.jpg'
         color_depth_image_filename = f'color_depth_image_{image_num}.jpg'
@@ -164,7 +164,4 @@ if __name__ == "__main__":
             image_num += 1
         
     cv2.destroyAllWindows()
-
-
-
 
